@@ -1,0 +1,316 @@
+/* ==========================================================================
+   THE VALE FORUM 2026
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CONFIG — the three things you will actually want to change
+   --------------------------------------------------------------------------
+
+   FORM_URL
+     The PUBLIC link to the Google Form. Right now this is built from the
+     form id in the edit URL, which works as soon as the form is published
+     and set to "Anyone with the link".
+
+     To get the canonical public link: open the form → Send → the link (🔗)
+     tab → copy. It looks like:
+       https://docs.google.com/forms/d/e/1FAIpQLSc..../viewform
+     Paste it below, replacing the value.
+
+     Until the form is published, Google returns 401 and the embed will not
+     render — the page falls back to an "open in a new tab" link on its own,
+     so nothing breaks in the meantime.
+
+   OPENS_AT / CLOSES_AT
+     Application window. The whole Apply section (countdown, button, copy)
+     switches itself between three states off these two dates, so you do not
+     have to redeploy on the 15th or the 30th.
+---------------------------------------------------------------------------- */
+
+const FORM_URL  = "https://docs.google.com/forms/d/1s31Bd04MQvLgops2mI22ROAvZ-ziHNJw41iDxOXBM_8/viewform";
+const OPENS_AT  = new Date("2026-08-15T00:00:00+02:00");
+const CLOSES_AT = new Date("2026-08-30T23:59:59+02:00");
+
+const CONTACT = "info@thevale.eu";
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+/* ==========================================================================
+   1 · Rising embers
+   The Symposium has snow falling. The Forum has sparks going up.
+   ========================================================================== */
+(function embers() {
+  const cv = $("#embers");
+  if (!cv || reduceMotion) { if (cv) cv.remove(); return; }
+
+  const ctx = cv.getContext("2d");
+  let w = 0, h = 0, dpr = 1, parts = [], raf = null, gust = 0;
+
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  function spawn(seeded) {
+    return {
+      x: rand(0, w),
+      y: seeded ? rand(0, h) : h + rand(0, 60),
+      r: rand(0.6, 2.1),
+      vy: rand(0.18, 0.62),
+      drift: rand(-0.22, 0.22),
+      phase: rand(0, Math.PI * 2),
+      wob: rand(0.004, 0.014),
+      life: rand(0.35, 1),
+      hue: rand(20, 42)
+    };
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const target = Math.min(90, Math.round((w * h) / 26000));
+    parts = Array.from({ length: target }, () => spawn(true));
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, w, h);
+    gust *= 0.96;
+    for (const p of parts) {
+      p.phase += p.wob;
+      p.y -= p.vy * (1 + gust);
+      p.x += p.drift + Math.sin(p.phase) * 0.35;
+
+      // Fade out over the top two thirds of the screen
+      const alpha = Math.max(0, Math.min(1, (p.y / h) * 1.5)) * p.life * 0.75;
+      if (p.y < -20 || p.x < -40 || p.x > w + 40) Object.assign(p, spawn(false));
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${p.hue}, 100%, ${58 + p.r * 6}%, ${alpha})`;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = `hsla(${p.hue}, 100%, 60%, ${alpha * 0.8})`;
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+    raf = requestAnimationFrame(frame);
+  }
+
+  function start() { if (!raf) raf = requestAnimationFrame(frame); }
+  function stop()  { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+  resize();
+  start();
+  window.addEventListener("resize", resize, { passive: true });
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+
+  // Poke the sun, feed the fire.
+  const sun = $("#sun");
+  if (sun) sun.addEventListener("click", () => { gust = 3.4; });
+})();
+
+/* ==========================================================================
+   2 · Reveal on scroll
+   ========================================================================== */
+(function reveals() {
+  const groups = $$("[data-reveal-group]");
+  groups.forEach(g => Array.from(g.children).forEach((c, i) => c.style.setProperty("--i", i)));
+
+  const targets = $$("[data-reveal], [data-reveal-group], .showcase-figure");
+  if (!("IntersectionObserver" in window)) {
+    targets.forEach(t => t.classList.add("is-in"));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+    }
+  }, { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
+  targets.forEach(t => io.observe(t));
+})();
+
+/* ==========================================================================
+   3 · The invitation — one line at a time
+   ========================================================================== */
+(function steps() {
+  const steps = $$(".q-step");
+  if (!steps.length) return;
+  if (!("IntersectionObserver" in window)) { steps.forEach(s => s.classList.add("is-live")); return; }
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) e.target.classList.toggle("is-live", e.isIntersecting);
+  }, { rootMargin: "-30% 0px -30% 0px", threshold: 0 });
+  steps.forEach(s => io.observe(s));
+})();
+
+/* ==========================================================================
+   4 · Header + side rail
+   ========================================================================== */
+(function chrome() {
+  const head = $("#head");
+  const onScroll = () => head && head.classList.toggle("is-scrolled", window.scrollY > 40);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  const links = $$(".rail a");
+  const sections = links
+    .map(a => ({ a, el: document.querySelector(a.getAttribute("href")) }))
+    .filter(s => s.el);
+  if (!sections.length || !("IntersectionObserver" in window)) return;
+
+  const visible = new Set();
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) e.isIntersecting ? visible.add(e.target) : visible.delete(e.target);
+    let current = null;
+    for (const s of sections) if (visible.has(s.el)) { current = s; break; }
+    links.forEach(a => a.removeAttribute("aria-current"));
+    if (current) current.a.setAttribute("aria-current", "true");
+  }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+  sections.forEach(s => io.observe(s.el));
+})();
+
+/* ==========================================================================
+   5 · Dialogs
+   ========================================================================== */
+(function dialogs() {
+  $$("[data-dlg]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const d = document.getElementById(btn.dataset.dlg);
+      if (d && typeof d.showModal === "function") d.showModal();
+      else if (d) d.setAttribute("open", "");
+    });
+  });
+  $$(".dlg").forEach(d => {
+    const x = $(".dlg-x", d);
+    if (x) x.addEventListener("click", () => d.close());
+    // Click the backdrop to dismiss
+    d.addEventListener("click", (e) => { if (e.target === d) d.close(); });
+  });
+})();
+
+/* ==========================================================================
+   6 · Apply — countdown, state machine, form embed
+   ========================================================================== */
+(function apply() {
+  const wrap    = $("#form-wrap");
+  const btn     = $("#apply-btn");
+  const alt     = $("#form-alt");
+  const link    = $("#form-link");
+  const copy    = $("#apply-copy");
+  const count   = $("#count");
+  const label   = $("#count-label");
+  const cells   = { d: $("#c-d"), h: $("#c-h"), m: $("#c-m"), s: $("#c-s") };
+
+  const embedUrl = FORM_URL + (FORM_URL.includes("?") ? "&" : "?") + "embedded=true";
+  const remind = `mailto:${CONTACT}?subject=${encodeURIComponent("Remind me – The VALE Forum 2026")}` +
+                 `&body=${encodeURIComponent("Hi! Please let me know the moment applications for the Forum open.")}`;
+  const late = `mailto:${CONTACT}?subject=${encodeURIComponent("Late application – The VALE Forum 2026")}`;
+
+  function state() {
+    const now = new Date();
+    if (now < OPENS_AT)  return "before";
+    if (now > CLOSES_AT) return "closed";
+    return "open";
+  }
+
+  /* --- rebuild the control, so re-rendering across a date boundary is safe --- */
+  function setControl(kind, text, href) {
+    const old = $("#apply-btn");
+    const el = document.createElement(kind === "link" ? "a" : "button");
+    el.id = "apply-btn";
+    el.className = "btn btn-xl";
+    el.textContent = text;
+    if (kind === "link") el.href = href;
+    else el.type = "button";
+    if (old) old.replaceWith(el);
+    else wrap.prepend(el);
+    return el;
+  }
+
+  function loadForm() {
+    if ($(".form-frame", wrap)) return;
+    const frame = document.createElement("iframe");
+    frame.className = "form-frame";
+    frame.src = embedUrl;
+    frame.title = "Application form – The VALE Forum 2026";
+    frame.loading = "lazy";
+    frame.setAttribute("allow", "clipboard-write");
+    wrap.prepend(frame);
+    const live = $("#apply-btn");
+    if (live) live.remove();
+    if (alt) alt.classList.remove("is-hidden");
+    frame.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  }
+
+  /* --- countdown --- */
+  let target = null;
+  function tick() {
+    if (!target) return;
+    let diff = Math.max(0, target - new Date());
+    const s = Math.floor(diff / 1000);
+    const set = (el, v) => { if (el) el.textContent = String(v).padStart(2, "0"); };
+    set(cells.d, Math.floor(s / 86400));
+    set(cells.h, Math.floor((s % 86400) / 3600));
+    set(cells.m, Math.floor((s % 3600) / 60));
+    set(cells.s, s % 60);
+    // Rolled past a boundary while the page was open — re-render.
+    if (diff === 0) { target = null; render(); }
+  }
+
+  function render() {
+    const st = state();
+
+    if (link) link.href = FORM_URL;
+
+    if (st === "before") {
+      if (label) label.textContent = "UNTIL APPLICATIONS OPEN";
+      if (count) count.classList.remove("is-hidden");
+      target = OPENS_AT;
+      if (copy) {
+        copy.innerHTML = "Applications open on <strong>15 August</strong> and close on " +
+          "<strong>30 August 2026</strong>. Fifty places, and we read every application — " +
+          "we are far more interested in what you are curious about than in your CV.";
+      }
+      setControl("link", "Remind me when it opens", remind);
+      if (alt) alt.classList.add("is-hidden");
+
+    } else if (st === "open") {
+      if (label) label.textContent = "LEFT TO APPLY";
+      if (count) count.classList.remove("is-hidden");
+      target = CLOSES_AT;
+      if (copy) {
+        copy.innerHTML = "Applications are <strong>open now</strong> and close on " +
+          "<strong>30 August 2026</strong>. Take your time with it — we read every one, " +
+          "and we are far more interested in what you are curious about than in your CV.";
+      }
+      setControl("button", "Open the application form").addEventListener("click", loadForm);
+      // Offer the new-tab route up front too — some people would rather not use an embed,
+      // and it is the escape hatch if Google's iframe ever refuses to render.
+      if (alt) alt.classList.remove("is-hidden");
+
+    } else {
+      if (label) label.textContent = "APPLICATIONS ARE CLOSED";
+      if (count) count.classList.add("is-hidden");
+      target = null;
+      if (copy) {
+        copy.innerHTML = "Applications closed on <strong>30 August 2026</strong>. If you have " +
+          "only just found this, write to us anyway — places occasionally open up, and we would " +
+          "rather hear from you late than not at all.";
+      }
+      setControl("link", "Write to us anyway", late);
+      if (alt) alt.classList.add("is-hidden");
+    }
+
+    tick();
+  }
+
+  if (wrap && btn) render();
+  setInterval(tick, 1000);
+
+  /* --- every other Apply button just brings you here --- */
+  $$(".js-apply").forEach(b => {
+    if (b.id === "apply-btn") return;
+    b.addEventListener("click", () => {
+      const t = $("#apply");
+      if (t) t.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    });
+  });
+})();
