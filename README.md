@@ -130,6 +130,39 @@ Unverified numbers were pulled rather than published: the stats row now uses onl
 that can be counted from the repo (six courses since 2018, fifty places, five days, one
 public day).
 
+## Funding attribution
+
+The page carries a dedicated funding band above the footer, using the official
+**"Co-funded by the European Union"** emblem (`/logos/eu-cofunded.png`, from the
+Commission's logo download centre).
+
+That is the current 2021–2027 Erasmus+ emblem. The site previously carried
+*"Co-funded by the Erasmus+ Programme of the European Union"*, which is the retired
+2014–2020 lockup — it has been removed. The disclaimer wording is the standard EACEA
+text. The emblem sits on a white card because it must keep its own background to stay
+legible and compliant; it cannot be tinted into the page.
+
+## Open questions for the team
+
+Three things in the grant application (`KA153-YOU-7C226954`) don't match the
+participant-facing material. The page follows the participant-facing material in each
+case, because that is what Erik confirmed — but they are worth a decision:
+
+1. **Berlin vs Hamburg.** The application says the Forum runs in Berlin. The brochure,
+   `thevale.eu/forum-2026` and the booked venue all say near Hamburg. The page says
+   Gut Schöneworth.
+2. **Who can apply.** The application says *"50 youth workers from 13 YFU partner
+   organisations"*. The brochure is broader: youth workers, NGO and civil society
+   leaders, 20–45, Europe-based. The page uses the broader framing. If places are in
+   fact allocated through partner organisations, the eligibility copy and the
+   `d-match` dialog need rewriting.
+3. **Who leads the project.** The applicant organisation is Youth For Understanding
+   (NO); The VALE is one of thirteen partner organisations. An earlier draft of the
+   footer claimed the project was *"led by The VALE"*, which was wrong and has been
+   removed. The funding band now says "delivered together with Youth For Understanding
+   organisations across Europe" — adjust if The VALE's role should be stated more
+   precisely.
+
 ## Accessibility
 
 Skip link, landmarks and heading order, `aria-current` on the rail, focus-visible rings,

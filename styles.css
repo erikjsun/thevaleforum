@@ -654,6 +654,34 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .team-grid { grid-template-columns: 1fr; max-width: 340px; } }
 
+/* ---------- Funding ----------
+   The emblem has to sit on white to stay legible and compliant, so it gets
+   its own card rather than being tinted into the page. */
+.funding {
+  padding: clamp(3rem, 8vh, 5rem) clamp(1.4rem, 5vw, 4rem);
+  border-top: 1px solid var(--line);
+  background: radial-gradient(70% 100% at 20% 0%, rgba(255, 160, 35, .05), transparent 60%), var(--ember-2);
+}
+.funding-inner {
+  max-width: 1080px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  gap: clamp(1.8rem, 4vw, 3.2rem); align-items: start;
+}
+.funding-mark { background: #fff; border-radius: 12px; padding: clamp(.9rem, 2vw, 1.2rem); }
+.funding-mark img { width: 100%; height: auto; }
+.funding-h {
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(.94rem, 2vw, 1.15rem); letter-spacing: .16em; color: var(--orange);
+  margin-bottom: .9rem;
+}
+.funding-body p { color: var(--muted); font-weight: 300; font-size: .96rem; line-height: 1.65; max-width: 68ch; }
+.funding-body strong { color: var(--txt); font-weight: 500; }
+.funding-disclaimer { margin-top: 1rem; font-size: .78rem; line-height: 1.6; opacity: .78; }
+@media (max-width: 720px) {
+  .funding-inner { grid-template-columns: 1fr; }
+  .funding-mark { max-width: 300px; }
+}
+
 /* ---------- Footer ---------- */
 .site-foot { border-top: 1px solid var(--line); padding: clamp(3rem, 8vh, 5rem) clamp(1.4rem, 5vw, 4rem) 2.2rem; background: var(--ember-2); }
 .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1.4fr 1fr; gap: 2.4rem; max-width: 1160px; margin: 0 auto; }
@@ -667,10 +695,6 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 .foot-col a { display: block; color: var(--txt); text-decoration: none; margin-bottom: .4rem; }
 .foot-col a:hover { color: var(--orange); }
 .foot-note { margin-top: .7rem; font-size: .8rem; color: var(--muted); max-width: 30ch; }
-.foot-funding { max-width: 1160px; margin: 3rem auto 0; padding-top: 2rem; border-top: 1px solid var(--line); display: grid; grid-template-columns: auto 1fr; gap: clamp(1.2rem, 3vw, 2.4rem); align-items: center; }
-.eu-emblem { width: clamp(190px, 20vw, 260px); height: auto; background: #fff; padding: .7rem .9rem; border-radius: 8px; }
-.foot-funding p { font-size: .74rem; line-height: 1.6; color: var(--muted); max-width: 74ch; }
-@media (max-width: 760px) { .foot-funding { grid-template-columns: 1fr; justify-items: start; } }
 .foot-legal { max-width: 1160px; margin: 2rem auto 0; padding-top: 1.4rem; border-top: 1px solid var(--line); font-size: .78rem; color: var(--muted); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .foot-see-you { color: var(--orange-soft); font-style: italic; }
 
