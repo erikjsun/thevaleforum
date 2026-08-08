@@ -436,7 +436,6 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   .beat:nth-child(2n) .beat-photo { order: 0; }
   .beat-photo-tall { max-width: 340px; justify-self: start; }
 }
-.day-note { margin-top: clamp(2.2rem, 6vh, 3.4rem); font-style: italic; color: rgba(26, 18, 12, .58); max-width: 56ch; }
 
 /* ---------- Can you imagine ---------- */
 .imagine {
