@@ -244,7 +244,8 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   function show(n) {
     if (!n) return;
     const kind = n.classList.contains("nd-sym") ? "sym"
-               : n.classList.contains("nd-forum") ? "forum" : "course";
+               : n.classList.contains("nd-forum") ? "forum"
+               : n.classList.contains("nd-mark") ? "mark" : "course";
     const label = n.getAttribute("aria-label") || "";
     const [head, ...rest] = label.split(" — ");
     const [title, detail] = rest.join(" — ").split(/\.\s(?=[^.]*$)/);
@@ -253,7 +254,7 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
     ti.textContent = title || "";
     de.textContent = (detail || "").replace(/\.$/, "");
 
-    card.classList.remove("is-sym", "is-forum");
+    card.classList.remove("is-sym", "is-forum", "is-mark");
     if (kind !== "course") card.classList.add("is-" + kind);
     card.classList.add("is-live");
 
