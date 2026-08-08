@@ -342,7 +342,7 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   overflow: hidden; background: var(--ember-2);
 }
 .showcase-img {
-  width: 100%; height: 100%; object-fit: cover; object-position: 48% 46%;
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 66%;
   transform: scale(1.06); transition: transform 1.8s var(--ease-out);
 }
 .showcase-figure.is-in .showcase-img { transform: scale(1); }
@@ -365,7 +365,7 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 }
 @media (max-width: 620px) {
   .showcase-figure { height: clamp(340px, 58svh, 520px); }
-  .showcase-img { object-position: 72% 50%; }
+  .showcase-img { object-position: 50% 55%; }
 }
 
 /* ---------- 01 The invitation ---------- */
