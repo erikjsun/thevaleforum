@@ -595,71 +595,94 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 .venue-fine { max-width: 1080px; margin: clamp(2.2rem, 5vh, 3rem) auto 0; padding: 0 clamp(1.4rem, 5vw, 4rem); font-size: .88rem; color: var(--muted); text-align: center; }
 .venue-fine a { color: var(--orange); }
 
-/* ---------- 05 How we got here ----------
-   Two threads: courses in orange, Symposiums in the Symposium's own teal.
-   They run side by side down the road and meet at the Forum. */
-.history { padding: var(--pad-section) 0 calc(var(--pad-section) * .75); border-top: 1px solid var(--line); }
-.history-head { max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.4rem, 5vw, 4rem); text-align: center; }
-.history-head .section-lede { max-width: 56ch; }
-.k-course { color: var(--orange); font-weight: 400; }
-.k-sym { color: var(--teal); font-weight: 400; }
+/* ---------- 02 How we got here ----------
+   Two sine threads, courses and Symposiums, weaving past each other for
+   eight years and collapsing into a single point at the Forum. */
+.arc { padding: var(--pad-section) 0 calc(var(--pad-section) * .7); border-top: 1px solid var(--line); }
+.arc-head { max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.4rem, 5vw, 4rem); text-align: center; }
+.arc-head .section-lede { max-width: 54ch; }
+.k-course { color: var(--orange); }
+.k-sym { color: var(--teal); }
 
-.road {
-  list-style: none; margin: clamp(2.8rem, 7vh, 4.4rem) 0 0; padding: 2.4rem clamp(1.4rem, 5vw, 4rem) 1.4rem;
-  display: flex; gap: clamp(.9rem, 2vw, 1.4rem);
-  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
-}
-.road::-webkit-scrollbar { display: none; }
-.road:focus-visible { outline: 2px solid var(--orange); outline-offset: -6px; border-radius: 18px; }
-.stop {
-  position: relative; flex: 0 0 min(290px, 74vw); scroll-snap-align: center;
-  padding-top: 2.2rem;
-}
-/* the road itself */
-.stop::before {
-  content: ""; position: absolute; top: 6px; left: 0; right: 0;
-  height: 1px; background: var(--line);
-}
-.stop::after {
-  content: ""; position: absolute; top: 1px; left: 0;
-  width: 11px; height: 11px; border-radius: 50%;
-  background: var(--ember); border: 2px solid var(--muted);
-}
-.stop b {
-  display: block; font-family: var(--font-display); font-weight: 400;
-  font-size: .68rem; letter-spacing: .26em; color: var(--muted); margin-bottom: .5rem;
-}
-.stop h3 {
-  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
-  font-size: clamp(1.1rem, 2.2vw, 1.35rem); line-height: 1.05; letter-spacing: .02em;
-  color: var(--txt);
-}
-.stop p { margin-top: .6rem; font-size: .9rem; font-weight: 300; line-height: 1.55; color: var(--muted); padding-right: 1.2rem; }
+.arc-stage { position: relative; margin-top: clamp(1.6rem, 4vh, 2.6rem); }
+.arc-scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.arc-scroll::-webkit-scrollbar { display: none; }
+.arc-svg { display: block; width: 100%; min-width: 1150px; height: auto; overflow: visible; }
 
-.stop-course::after { border-color: var(--orange); }
-.stop-course b { color: var(--orange); }
-.stop-sym::after { border-color: var(--teal); }
-.stop-sym b { color: var(--teal); }
+/* threads */
+.thread { fill: none; stroke-width: 2.5; stroke-linecap: round; opacity: .75; transition: opacity .45s, stroke-width .45s; }
+.th-course { stroke: var(--orange); }
+.th-sym { stroke: var(--teal); }
+.arc-stage.dim-course .th-course, .arc-stage.dim-sym .th-sym { opacity: .16; }
+.arc-stage.lift-course .th-course, .arc-stage.lift-sym .th-sym { opacity: 1; stroke-width: 3.4; }
 
-/* The destination */
-.stop-forum { flex-basis: min(360px, 84vw); }
-.stop-forum::after {
-  width: 17px; height: 17px; top: -2px; left: -2px;
-  background: var(--pink); border-color: var(--pink);
-  box-shadow: 0 0 22px rgba(255, 87, 87, .8);
-}
-.stop-forum::before { background: linear-gradient(90deg, var(--line), transparent); }
-.stop-forum b { color: var(--pink); }
-.stop-forum h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
-.stop-forum p { color: var(--txt); }
-.stop-forum em { font-style: normal; color: var(--orange-soft); }
+/* the draw-in, once, when the section arrives */
+.arc-stage .thread { stroke-dasharray: 4200; stroke-dashoffset: 4200; }
+.arc-stage.is-drawn .thread { transition: stroke-dashoffset 2.4s var(--ease-out), opacity .45s, stroke-width .45s; stroke-dashoffset: 0; }
 
-.road-hint {
-  max-width: 1180px; margin: 1rem auto 0; padding: 0 clamp(1.4rem, 5vw, 4rem);
-  font-family: var(--font-display); font-size: .6rem; letter-spacing: .3em; color: var(--muted);
-  text-align: right;
+/* travelling sparks */
+.trav { opacity: 0; transition: opacity .8s .9s; }
+.arc-stage.is-drawn .trav { opacity: .9; }
+.trav-course { fill: var(--orange-soft); }
+.trav-sym { fill: var(--teal); }
+
+/* nodes */
+.nd { cursor: pointer; outline: none; }
+.nd-hit { fill: transparent; }
+.nd-halo { fill: none; stroke-width: 1; opacity: 0; transition: opacity .3s, r .3s var(--ease-out); }
+.nd-ring { fill: var(--ember); stroke-width: 1.6; transition: r .3s var(--ease-out), stroke-width .3s; }
+.nd-dot { transition: r .3s var(--ease-out); }
+.nd-yr {
+  font-family: var(--font-display); font-weight: 700; font-size: 21px; letter-spacing: .18em;
+  text-anchor: middle; fill: var(--muted); transition: fill .3s;
 }
-@media (min-width: 1500px) { .road-hint { display: none; } }
+.nd-course .nd-ring, .nd-course .nd-halo { stroke: var(--orange); }
+.nd-course .nd-dot { fill: var(--orange); }
+.nd-sym .nd-ring, .nd-sym .nd-halo { stroke: var(--teal); }
+.nd-sym .nd-dot { fill: var(--teal); }
+.nd-forum .nd-ring, .nd-forum .nd-halo { stroke: var(--pink); }
+.nd-forum .nd-dot { fill: var(--pink); }
+.nd-forum .nd-yr { fill: var(--pink); font-size: 23px; }
+
+.nd:hover .nd-halo, .nd:focus-visible .nd-halo, .nd.is-on .nd-halo { opacity: .55; r: 26; }
+.nd:hover .nd-ring, .nd:focus-visible .nd-ring, .nd.is-on .nd-ring { r: 15; stroke-width: 2.4; }
+.nd:hover .nd-dot,  .nd:focus-visible .nd-dot,  .nd.is-on .nd-dot { r: 6.5; }
+.nd:hover .nd-yr,   .nd:focus-visible .nd-yr,   .nd.is-on .nd-yr { fill: var(--txt); }
+.nd:focus-visible .nd-hit { stroke: var(--orange); stroke-width: 2; stroke-dasharray: 3 3; }
+
+/* the Forum keeps a slow pulse of its own */
+.nd-forum .nd-halo { opacity: .34; animation: forumPulse 3.4s var(--ease-out) infinite; }
+@keyframes forumPulse { 0%,100% { r: 22; opacity: .34; } 50% { r: 30; opacity: .1; } }
+
+/* detail card */
+.arc-card {
+  max-width: 640px; margin: clamp(1.4rem, 3vh, 2rem) auto 0;
+  padding: 0 clamp(1.4rem, 5vw, 4rem); text-align: center;
+  min-height: 7.5rem;
+}
+.arc-card-yr { font-family: var(--font-display); font-weight: 700; font-size: .68rem; letter-spacing: .3em; color: var(--orange); }
+.arc-card.is-sym .arc-card-yr { color: var(--teal); }
+.arc-card.is-forum .arc-card-yr { color: var(--pink); }
+.arc-card-t {
+  margin-top: .5rem; font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(1.3rem, 3vw, 1.9rem); line-height: 1.05; color: var(--txt);
+}
+.arc-card-d { margin-top: .5rem; color: var(--muted); font-weight: 300; font-size: .96rem; }
+.arc-card > * { opacity: 0; transform: translateY(6px); transition: opacity .28s, transform .28s var(--ease-out); }
+.arc-card.is-live > * { opacity: 1; transform: none; }
+
+.arc-hint {
+  max-width: 1180px; margin: clamp(1rem, 2.5vh, 1.6rem) auto 0; padding: 0 clamp(1.4rem, 5vw, 4rem);
+  font-family: var(--font-display); font-size: .58rem; letter-spacing: .3em; color: var(--muted);
+  text-align: center; opacity: .7;
+}
+@media (min-width: 1350px) { .arc-hint { opacity: .45; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-stage .thread { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .trav { display: none; }
+  .nd-forum .nd-halo { animation: none; }
+}
 
 /* ---------- 05 Apply ---------- */
 .seat { padding: var(--pad-section) 1.4rem calc(var(--pad-section) * 1.15); text-align: center; }
@@ -748,11 +771,6 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   display: block; margin-top: .25em; font-size: .62rem; letter-spacing: .2em;
   color: var(--muted); font-weight: 400;
 }
-.funding-yfu {
-  width: clamp(150px, 18vw, 190px); height: auto;
-  margin: -.2rem 0 1.1rem; opacity: .9;
-}
-
 /* ---------- Funding ----------
    The emblem has to sit on white to stay legible and compliant, so it gets
    its own card rather than being tinted into the page. */
@@ -763,11 +781,27 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 }
 .funding-inner {
   max-width: 1080px; margin: 0 auto;
-  display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  display: grid; grid-template-columns: minmax(300px, 460px) minmax(0, 1fr);
   gap: clamp(1.8rem, 4vw, 3.2rem); align-items: start;
 }
-.funding-mark { background: #fff; border-radius: 12px; padding: clamp(.9rem, 2vw, 1.2rem); }
-.funding-mark img { width: 100%; height: auto; }
+/* Two funder plates side by side: the EU emblem, then YFU */
+.funding-marks { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(.8rem, 2vw, 1.1rem); }
+.funding-mark { margin: 0; }
+.mark-plate {
+  background: #fff; border-radius: 12px;
+  padding: clamp(.8rem, 1.8vw, 1.1rem);
+  min-height: 92px; display: grid; place-items: center;
+}
+.mark-plate img { width: 100%; height: auto; }
+.funding-mark figcaption {
+  margin-top: .8rem; font-size: .76rem; line-height: 1.5;
+  color: var(--muted); font-weight: 300;
+}
+.funding-mark figcaption b {
+  display: block; font-family: var(--font-display); font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; font-size: .68rem;
+  color: var(--orange-soft); margin-bottom: .25rem;
+}
 .funding-h {
   font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
   font-size: clamp(.94rem, 2vw, 1.15rem); letter-spacing: .16em; color: var(--orange);
@@ -776,9 +810,12 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 .funding-body p { color: var(--muted); font-weight: 300; font-size: .96rem; line-height: 1.65; max-width: 68ch; }
 .funding-body strong { color: var(--txt); font-weight: 500; }
 .funding-disclaimer { margin-top: 1rem; font-size: .78rem; line-height: 1.6; opacity: .78; }
-@media (max-width: 720px) {
+@media (max-width: 860px) {
   .funding-inner { grid-template-columns: 1fr; }
-  .funding-mark { max-width: 300px; }
+  .funding-marks { max-width: 460px; }
+}
+@media (max-width: 420px) {
+  .funding-marks { grid-template-columns: 1fr; }
 }
 
 /* ---------- Footer ---------- */

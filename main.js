@@ -218,7 +218,94 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 })();
 
 /* ==========================================================================
-   6 · Venue carousel
+   6 · The arc — two threads, eight years
+   ========================================================================== */
+(function arc() {
+  const stage = $(".arc-stage");
+  const card  = $("#arc-card");
+  if (!stage || !card) return;
+
+  const nodes = $$(".nd", stage);
+  const yr = $(".arc-card-yr", card);
+  const ti = $(".arc-card-t", card);
+  const de = $(".arc-card-d", card);
+  const forum = nodes[nodes.length - 1];
+
+  // Draw the threads in once the section is on screen
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) if (e.isIntersecting) { stage.classList.add("is-drawn"); io.disconnect(); }
+    }, { threshold: 0.18 });
+    io.observe(stage);
+  } else {
+    stage.classList.add("is-drawn");
+  }
+
+  function show(n) {
+    if (!n) return;
+    const kind = n.classList.contains("nd-sym") ? "sym"
+               : n.classList.contains("nd-forum") ? "forum" : "course";
+    const label = n.getAttribute("aria-label") || "";
+    const [head, ...rest] = label.split(" — ");
+    const [title, detail] = rest.join(" — ").split(/\.\s(?=[^.]*$)/);
+
+    yr.textContent = head;
+    ti.textContent = title || "";
+    de.textContent = (detail || "").replace(/\.$/, "");
+
+    card.classList.remove("is-sym", "is-forum");
+    if (kind !== "course") card.classList.add("is-" + kind);
+    card.classList.add("is-live");
+
+    nodes.forEach(o => o.classList.toggle("is-on", o === n));
+    stage.classList.remove("dim-course", "dim-sym", "lift-course", "lift-sym");
+    if (kind === "course") stage.classList.add("dim-sym", "lift-course");
+    if (kind === "sym")    stage.classList.add("dim-course", "lift-sym");
+  }
+
+  function rest() {
+    stage.classList.remove("dim-course", "dim-sym", "lift-course", "lift-sym");
+    nodes.forEach(o => o.classList.remove("is-on"));
+    show(forum);
+    nodes.forEach(o => o.classList.remove("is-on"));
+  }
+
+  nodes.forEach(n => {
+    n.addEventListener("mouseenter", () => show(n));
+    n.addEventListener("focus", () => show(n));
+    n.addEventListener("click", () => show(n));
+    n.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(n); }
+    });
+  });
+  stage.addEventListener("mouseleave", rest);
+
+  // The Forum is what the card says when nothing is hovered
+  rest();
+
+  /* Drag to pan the timeline, for anyone without a trackpad */
+  const scroller = $("#arc-scroll");
+  if (scroller) {
+    let down = false, sx = 0, sl = 0, moved = false;
+    scroller.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch") return;      // native touch scroll is better
+      down = true; moved = false; sx = e.clientX; sl = scroller.scrollLeft;
+    });
+    scroller.addEventListener("pointermove", (e) => {
+      if (!down) return;
+      const dx = e.clientX - sx;
+      if (Math.abs(dx) > 3) moved = true;
+      scroller.scrollLeft = sl - dx;
+    });
+    const up = () => { down = false; };
+    scroller.addEventListener("pointerup", up);
+    scroller.addEventListener("pointerleave", up);
+    scroller.addEventListener("click", (e) => { if (moved) e.preventDefault(); }, true);
+  }
+})();
+
+/* ==========================================================================
+   7 · Venue carousel
    Native scroll-snap does the moving; this only adds buttons, dots and
    arrow keys on top, so it still works if the JS never runs.
    ========================================================================== */
@@ -269,7 +356,7 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 })();
 
 /* ==========================================================================
-   7 · Apply — countdown, state machine, form embed
+   8 · Apply — countdown, state machine, form embed
    ========================================================================== */
 (function apply() {
   const wrap    = $("#form-wrap");
