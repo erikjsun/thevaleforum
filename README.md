@@ -104,13 +104,31 @@ applicants actually write in). Nothing is fetched from a third party at page loa
 
 ## Content sources
 
-Facts came from the 2026 brochure and `thevale.eu/forum-2026`: the dates, fifty places,
-the €40/€80/€120 sliding fee, travel reimbursement (€250 outside Germany, €140 within),
-the participant profile, the five-day shape and the team.
+Every concrete claim on the page traces to one of four places. Nothing is invented — if
+you cannot source it, cut it rather than write around it.
 
-The framing is deliberately not the brochure's. The brochure speaks to partners and
-funders; this page speaks to VALE alumni, on the theory that the strongest reason to come
-back is that you have been here before and remember what it was like.
+| Source | What came from it |
+|---|---|
+| 2026 brochure + `thevale.eu/forum-2026` | Dates, fifty places, €40/€80/€120 sliding fee, travel reimbursement (€250 / €140), participant profile, five-day shape, the team |
+| `erikjsun/thevalenorthstar` | Alumni quotes (verbatim from `data/evaluations/raw/*.csv` and `config/stats.ts`), and the real course formats: spirit groups, morning walks, the praise circle |
+| `gut-schoeneworth.de` | Venue: the Apfelscheune's 120 m² and 4.3 m ceilings, the thatch, chef Matthias Pape, Gault&Millau 2005, Gründerstar 2023, Galloway beef, estate-pressed apple juice, WiFi, "sleep with the window open" |
+| The team | The "Can you imagine" list, which is explicitly framed as *possible*, not scheduled — the programme genuinely does not exist until participants write it |
+
+Voice is first-person from the organising team. The brochure speaks to partners and
+funders; this page speaks to VALE alumni.
+
+**Two standing rules**, learned the hard way on the first draft:
+
+1. **No invented texture.** An early version had a lake, a 2am conversation and a
+   three-hour goodbye. None existed. Specifics that sound intimate but are generated are
+   exactly what makes a page read as machine-written — and alumni spot them instantly.
+2. **No invented attributions.** Quotes carry the real cohort year and a generic
+   attribution (`A participant · 2025 course`). Never attach a name that isn't in the
+   source data.
+
+Unverified numbers were pulled rather than published: the stats row now uses only figures
+that can be counted from the repo (six courses since 2018, fifty places, five days, one
+public day).
 
 ## Accessibility
 

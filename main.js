@@ -187,7 +187,58 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 })();
 
 /* ==========================================================================
-   6 · Apply — countdown, state machine, form embed
+   6 · Venue carousel
+   Native scroll-snap does the moving; this only adds buttons, dots and
+   arrow keys on top, so it still works if the JS never runs.
+   ========================================================================== */
+(function carousel() {
+  const track = $("#venue-track");
+  const dots  = $("#venue-dots");
+  if (!track) return;
+
+  const slides = $$(".slide", track);
+  if (!slides.length) return;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement("i");
+    if (!i) d.className = "is-on";
+    dots && dots.appendChild(d);
+  });
+
+  const go = (dir) => {
+    const step = slides[0].getBoundingClientRect().width + 16;
+    track.scrollBy({ left: dir * step, behavior: reduceMotion ? "auto" : "smooth" });
+  };
+
+  $$(".carousel-btn").forEach(b =>
+    b.addEventListener("click", () => go(Number(b.dataset.dir)))
+  );
+
+  track.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+    if (e.key === "ArrowLeft")  { e.preventDefault(); go(-1); }
+  });
+
+  // Mark the slide nearest the centre of the track
+  let tick = null;
+  track.addEventListener("scroll", () => {
+    if (tick) return;
+    tick = requestAnimationFrame(() => {
+      tick = null;
+      const mid = track.scrollLeft + track.clientWidth / 2;
+      let best = 0, bestD = Infinity;
+      slides.forEach((s, i) => {
+        const c = s.offsetLeft + s.offsetWidth / 2;
+        const d = Math.abs(c - mid);
+        if (d < bestD) { bestD = d; best = i; }
+      });
+      if (dots) Array.from(dots.children).forEach((d, i) => d.classList.toggle("is-on", i === best));
+    });
+  }, { passive: true });
+})();
+
+/* ==========================================================================
+   7 · Apply — countdown, state machine, form embed
    ========================================================================== */
 (function apply() {
   const wrap    = $("#form-wrap");

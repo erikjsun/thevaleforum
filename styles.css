@@ -418,6 +418,44 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 }
 .day-note { margin-top: clamp(2.2rem, 6vh, 3.4rem); font-style: italic; color: rgba(26, 18, 12, .58); max-width: 56ch; }
 
+/* ---------- Can you imagine ---------- */
+.imagine {
+  margin-top: clamp(3.4rem, 9vh, 5.6rem);
+  padding: clamp(1.8rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3.2rem);
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(255, 160, 35, .12), transparent 58%),
+    rgba(255, 255, 255, .5);
+  border: 1px solid rgba(167, 75, 75, .16);
+}
+.imagine-h {
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(1.5rem, 3.4vw, 2.3rem); letter-spacing: .04em; color: var(--ink);
+}
+.imagine-lede { margin-top: .7rem; max-width: 54ch; color: rgba(26, 18, 12, .62); }
+.imagine-list { list-style: none; margin: clamp(1.6rem, 4vh, 2.4rem) 0 0; display: grid; gap: clamp(1.1rem, 2.6vh, 1.6rem); }
+.imagine-list li {
+  position: relative; padding-left: 1.6rem; max-width: 62ch;
+  color: rgba(26, 18, 12, .78); line-height: 1.6;
+}
+.imagine-list li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--orange);
+}
+.imagine-list strong { color: var(--ink); font-weight: 500; }
+.imagine-list em { color: var(--brick); font-style: italic; }
+
+/* ---------- The five days, compactly ---------- */
+.daystrip {
+  list-style: none; margin: clamp(2.6rem, 7vh, 4rem) 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: clamp(.9rem, 2.4vw, 2.4rem);
+  border-top: 1px solid rgba(26, 18, 12, .14); padding-top: clamp(1.4rem, 3vh, 2rem);
+}
+.daystrip li { display: flex; flex-direction: column; gap: .25rem; }
+.daystrip b { font-family: var(--font-display); font-weight: 700; font-size: .78rem; letter-spacing: .22em; color: var(--brick); }
+.daystrip span { font-size: .92rem; color: rgba(26, 18, 12, .66); }
+.daystrip-cool b { color: #2E7D77; }
+
 /* ---------- 03 The people ---------- */
 .people { padding: var(--pad-section) clamp(1.4rem, 5vw, 4rem); }
 .people-grid {
@@ -480,6 +518,62 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 .place-lede { max-width: 52ch; margin: clamp(1.8rem, 4vh, 2.6rem) auto 0; color: var(--muted); font-weight: 300; font-size: clamp(1rem, 1.9vw, 1.18rem); }
 .place-lede-2 { margin-top: 1.2rem; color: var(--teal); opacity: .85; }
 .place-cta { margin-top: 2.2rem; }
+
+/* ---------- 03 The place (venue) ---------- */
+.venue { padding: var(--pad-section) 0 calc(var(--pad-section) * .8); border-top: 1px solid var(--line); overflow: hidden; }
+.venue-head { max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.4rem, 5vw, 4rem); text-align: center; }
+.venue-title {
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(2.7rem, 9.5vw, 8rem);
+  line-height: .95; letter-spacing: .02em;
+  background: linear-gradient(180deg, #FFF7EC, #E0A868 140%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.venue-coords { margin-top: 1rem; font-family: var(--font-display); letter-spacing: .32em; font-size: clamp(.68rem, 1.5vw, .88rem); color: var(--orange); }
+.venue-lede { max-width: 54ch; margin: clamp(1.8rem, 4vh, 2.6rem) auto 0; color: var(--muted); font-weight: 300; font-size: clamp(1rem, 1.9vw, 1.18rem); }
+
+/* Carousel */
+.carousel { margin-top: clamp(2.6rem, 7vh, 4.2rem); }
+.carousel-track {
+  display: flex; gap: clamp(.8rem, 1.6vw, 1.2rem);
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; scrollbar-width: none;
+  padding: 0 clamp(1.4rem, 5vw, 4rem) .6rem;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-track:focus-visible { outline: 2px solid var(--orange); outline-offset: -4px; border-radius: 18px; }
+.slide {
+  flex: 0 0 min(760px, 82vw); margin: 0; scroll-snap-align: center;
+  border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+  background: var(--ember-2); box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+}
+/* height:auto is load-bearing — the HTML height attribute otherwise
+   wins over aspect-ratio and the slides render at intrinsic size. */
+.slide img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.slide figcaption {
+  padding: .95rem clamp(1rem, 2vw, 1.4rem) 1.15rem;
+  font-size: .92rem; font-weight: 300; line-height: 1.5; color: var(--muted);
+}
+.carousel-ui { display: flex; align-items: center; justify-content: center; gap: 1.2rem; margin-top: clamp(1.2rem, 3vh, 1.8rem); }
+.carousel-btn {
+  width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line);
+  color: var(--muted); font-size: 1rem; transition: .25s;
+}
+.carousel-btn:hover { color: var(--orange); border-color: var(--orange); transform: translateY(-2px); }
+.carousel-dots { display: flex; gap: .5rem; }
+.carousel-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: .3s; }
+.carousel-dots i.is-on { background: var(--orange); box-shadow: 0 0 12px rgba(255, 160, 35, .7); }
+
+/* Venue features */
+.features {
+  list-style: none; max-width: 1080px; margin: clamp(3rem, 8vh, 4.6rem) auto 0;
+  padding: 0 clamp(1.4rem, 5vw, 4rem);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.6rem, 4vw, 3rem);
+}
+.features h3 { font-family: var(--font-display); font-weight: 700; font-size: .82rem; letter-spacing: .26em; color: var(--orange); margin-bottom: .8rem; }
+.features p { color: var(--muted); font-weight: 300; line-height: 1.65; }
+@media (max-width: 760px) { .features { grid-template-columns: 1fr; } }
+.venue-fine { max-width: 1080px; margin: clamp(2.2rem, 5vh, 3rem) auto 0; padding: 0 clamp(1.4rem, 5vw, 4rem); font-size: .88rem; color: var(--muted); text-align: center; }
+.venue-fine a { color: var(--orange); }
 
 /* ---------- 05 Apply ---------- */
 .seat { padding: var(--pad-section) 1.4rem calc(var(--pad-section) * 1.15); text-align: center; }
@@ -615,3 +709,5 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   .ticker-track { animation: none; }
   .showcase-img { transform: none; }
 }
+
+.fee-more { margin-top: 1.6rem; }
