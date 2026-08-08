@@ -382,6 +382,26 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 .q-step-last .link-more { opacity: 0; transition: opacity .9s .5s; }
 .q-step-last.is-live .link-more { opacity: 1; }
 
+/* ---------- The pitch, in the main flow ---------- */
+.manifesto {
+  max-width: 62ch; margin: clamp(1rem, 4vh, 3rem) auto 0;
+  padding: 0 1.4rem clamp(2rem, 6vh, 4rem); text-align: left;
+}
+.manifesto p {
+  color: var(--muted); font-weight: 300;
+  font-size: clamp(1.05rem, 2.1vw, 1.34rem); line-height: 1.6;
+}
+.manifesto p + p { margin-top: 1.5em; }
+.manifesto strong { color: var(--txt); font-weight: 500; }
+.manifesto em { font-style: italic; color: var(--orange-soft); }
+.manifesto-kicker {
+  margin-top: 1.8em !important;
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .04em; line-height: 1.15;
+  font-size: clamp(1.6rem, 4.2vw, 2.7rem) !important; color: var(--txt) !important;
+}
+.manifesto-kicker em { font-style: normal; color: var(--orange); }
+
 /* ---------- 02 Five days (paper) ---------- */
 .day { background: var(--paper); color: var(--ink); padding: var(--pad-section) clamp(1.4rem, 5vw, 4rem); }
 .day-inner { max-width: 1060px; margin: 0 auto; }

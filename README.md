@@ -142,26 +142,47 @@ That is the current 2021–2027 Erasmus+ emblem. The site previously carried
 text. The emblem sits on a white card because it must keep its own background to stay
 legible and compliant; it cannot be tinted into the page.
 
-## Open questions for the team
+## Where the page departs from the grant application
 
-Three things in the grant application (`KA153-YOU-7C226954`) don't match the
-participant-facing material. The page follows the participant-facing material in each
-case, because that is what Erik confirmed — but they are worth a decision:
+The application (`KA153-YOU-7C226954`) was written before some things settled. Where it
+disagrees with reality, **the page follows reality** — confirmed by Erik:
 
-1. **Berlin vs Hamburg.** The application says the Forum runs in Berlin. The brochure,
-   `thevale.eu/forum-2026` and the booked venue all say near Hamburg. The page says
-   Gut Schöneworth.
-2. **Who can apply.** The application says *"50 youth workers from 13 YFU partner
-   organisations"*. The brochure is broader: youth workers, NGO and civil society
-   leaders, 20–45, Europe-based. The page uses the broader framing. If places are in
-   fact allocated through partner organisations, the eligibility copy and the
-   `d-match` dialog need rewriting.
-3. **Who leads the project.** The applicant organisation is Youth For Understanding
-   (NO); The VALE is one of thirteen partner organisations. An earlier draft of the
-   footer claimed the project was *"led by The VALE"*, which was wrong and has been
-   removed. The funding band now says "delivered together with Youth For Understanding
-   organisations across Europe" — adjust if The VALE's role should be stated more
-   precisely.
+- **Location.** The application says Berlin. It is Hamburg: Gut Schöneworth, near Stade.
+  Ignore the application on this.
+- **Who leads.** The project is **led by The VALE**. Youth For Understanding Norway is
+  the applicant organisation (it holds the grant), with YFU partner organisations across
+  Europe. The funding band names both, since the applicant partner deserves the credit
+  and The VALE deserves the lead.
+
+**Still open:** the application says *"50 youth workers from 13 YFU partner
+organisations"*, while the brochure is broader — youth workers, NGO and civil society
+leaders, 20–45, Europe-based. The page uses the broader framing. If places are in fact
+allocated through partner organisations, the eligibility copy in `#people` and the
+`d-match` dialog both need rewriting before applications open.
+
+## A note on spirit groups
+
+Spirit groups are the single most praised thing in six years of course evaluations, so
+the page sells the small group hard — but carefully. The Forum will have *something in
+that spirit*, not spirit groups as run on a course, and the copy says exactly that
+rather than promising a format that isn't designed yet. When the shape firms up, the
+beat in `#format` is the place to update.
+
+## Positioning: not another course
+
+Almost everyone applying has already done a VALE course and found it transformative.
+The Forum builds on that and goes past it — you were the participant, now you run the
+room. Two rules came out of getting this wrong twice:
+
+1. **Don't sell it as Course #7.** An early draft counted courses in the stats row and
+   framed the whole thing as a return to the same experience.
+2. **Don't define it by negation either.** The fix for (1) was worse: a scroll beat
+   reading *"A course would put someone at the front to fix that"*, and the real pitch
+   hidden behind a "Why this isn't another course" dialog. Defensive, and buried.
+
+What's there now is affirmative and in the main flow — the `.manifesto` block in
+`#why`, ending on *Same people. Same care. Much bigger room.* If this needs revisiting,
+edit it in place; don't push it back into a dialog.
 
 ## Accessibility
 
