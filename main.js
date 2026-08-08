@@ -171,18 +171,49 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
    5 · Dialogs
    ========================================================================== */
 (function dialogs() {
+  // showModal() scrolls the page to the top when body is itself a scroll
+  // container (we set overflow-x: hidden). Pin the body while a panel is
+  // open — fixes the jump and stops the page scrolling behind the drawer.
+  let parked = 0;
+
+  function lock() {
+    parked = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${parked}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+  }
+  function unlock() {
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    // instant, or smooth scrolling animates the restore
+    const prev = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, parked);
+    document.documentElement.style.scrollBehavior = prev;
+  }
+
   $$("[data-dlg]").forEach(btn => {
     btn.addEventListener("click", () => {
       const d = document.getElementById(btn.dataset.dlg);
-      if (d && typeof d.showModal === "function") d.showModal();
-      else if (d) d.setAttribute("open", "");
+      if (!d) return;
+      lock();
+      if (typeof d.showModal === "function") d.showModal();
+      else d.setAttribute("open", "");
+      const body = $(".dlg-body", d);
+      if (body) body.scrollTop = 0;
     });
   });
+
   $$(".dlg").forEach(d => {
     const x = $(".dlg-x", d);
     if (x) x.addEventListener("click", () => d.close());
-    // Click the backdrop to dismiss
+    // Click outside the panel to dismiss
     d.addEventListener("click", (e) => { if (e.target === d) d.close(); });
+    // Covers the close button, the backdrop and Escape in one place
+    d.addEventListener("close", unlock);
   });
 })();
 
