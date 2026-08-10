@@ -317,13 +317,22 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   border-block: 1px solid var(--line); background: rgba(27, 15, 8, .55);
   padding: clamp(1.5rem, 4vh, 2.4rem) clamp(1.2rem, 4vw, 3rem);
 }
+.glance-h {
+  max-width: 1180px; margin: 0 auto clamp(1.6rem, 4vh, 2.6rem);
+  text-align: center; font-family: var(--font-display); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .18em;
+  font-size: clamp(1rem, 2.4vw, 1.4rem); color: var(--orange);
+}
 .glance-grid {
   max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap;
   justify-content: center; gap: clamp(1.4rem, 3.5vw, 3.6rem);
 }
-.glance-grid > div { max-width: 26ch; }
-.glance dt { margin-bottom: .5rem; font-family: var(--font-display); font-size: .64rem; letter-spacing: .28em; color: var(--orange); }
+.glance-grid > div { flex: 0 1 calc(33.333% - 2.4rem); max-width: 26ch; }
+.glance dt { margin-bottom: .5rem; font-family: var(--font-display); font-weight: 700; font-size: .86rem; letter-spacing: .2em; color: var(--orange); }
 .glance dd { font-weight: 300; font-size: .96rem; line-height: 1.5; color: var(--txt); }
+@media (max-width: 720px) {
+  .glance-grid > div { flex-basis: 100%; max-width: 30ch; }
+}
 
 /* ---------- Ticker ---------- */
 .ticker { border-block: 1px solid var(--line); overflow: hidden; background: rgba(27, 15, 8, .55); }
