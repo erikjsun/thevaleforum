@@ -327,11 +327,22 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap;
   justify-content: center; gap: clamp(1.4rem, 3.5vw, 3.6rem);
 }
-.glance-grid > div { flex: 0 1 calc(33.333% - 2.4rem); max-width: 26ch; }
-.glance dt { margin-bottom: .5rem; font-family: var(--font-display); font-weight: 700; font-size: .86rem; letter-spacing: .2em; color: var(--orange); }
+.glance-grid > div {
+  flex: 0 1 calc(33.333% - 2.4rem); max-width: 26ch;
+  padding: clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.2rem, 2.4vw, 1.6rem);
+  border: 1px solid var(--line); border-radius: 14px;
+  background: rgba(255, 160, 35, .05);
+  transition: border-color .3s var(--ease-out), transform .3s var(--ease-out), background .3s var(--ease-out);
+}
+.glance-grid > div:hover {
+  border-color: rgba(255, 160, 35, .38);
+  background: rgba(255, 160, 35, .08);
+  transform: translateY(-3px);
+}
+.glance dt { margin-bottom: .6rem; font-family: var(--font-display); font-weight: 700; font-size: 1.02rem; letter-spacing: .16em; color: var(--orange); }
 .glance dd { font-weight: 300; font-size: .96rem; line-height: 1.5; color: var(--txt); }
 @media (max-width: 720px) {
-  .glance-grid > div { flex-basis: 100%; max-width: 30ch; }
+  .glance-grid > div { flex-basis: 100%; max-width: 34ch; }
 }
 
 /* ---------- Ticker ---------- */
