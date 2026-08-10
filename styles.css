@@ -672,7 +672,7 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 .nd-sym .nd-dot { fill: var(--teal); }
 .nd-forum .nd-ring, .nd-forum .nd-halo { stroke: var(--pink); }
 .nd-forum .nd-dot { fill: var(--pink); }
-.nd-forum .nd-yr { fill: var(--pink); font-size: 23px; }
+.nd-forum .nd-yr { fill: var(--pink); font-size: 31px; }
 
 .nd:hover .nd-halo, .nd:focus-visible .nd-halo, .nd.is-on .nd-halo { opacity: .55; r: 26; }
 .nd:hover .nd-ring, .nd:focus-visible .nd-ring, .nd.is-on .nd-ring { r: 15; stroke-width: 2.4; }
@@ -701,7 +701,7 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   padding: 0 clamp(1.4rem, 5vw, 4rem); text-align: center;
   min-height: 7.5rem;
 }
-.arc-card-yr { font-family: var(--font-display); font-weight: 700; font-size: .68rem; letter-spacing: .3em; color: var(--orange); }
+.arc-card-yr { font-family: var(--font-display); font-weight: 700; font-size: .96rem; letter-spacing: .3em; color: var(--orange); }
 .arc-card.is-sym .arc-card-yr { color: var(--teal); }
 .arc-card.is-forum .arc-card-yr { color: var(--pink); }
 .arc-card-t {
