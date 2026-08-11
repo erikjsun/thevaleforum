@@ -484,3 +484,64 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
     });
   });
 })();
+
+/* ==========================================================================
+   Imagine — carousel (arrows on PC, swipe on mobile)
+   ========================================================================== */
+(function imagineCarousel() {
+  const track = $(".imagine-track");
+  if (!track) return;
+  const cards = $$(".imagine-card", track);
+  if (!cards.length) return;
+  const prev = $(".imagine-prev");
+  const next = $(".imagine-next");
+  const dotsWrap = $(".imagine-dots");
+
+  const dots = dotsWrap ? cards.map((_, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "imagine-dot";
+    b.setAttribute("aria-label", "Go to item " + (i + 1));
+    b.addEventListener("click", () => go(i));
+    dotsWrap.appendChild(b);
+    return b;
+  }) : [];
+
+  // Card whose centre is nearest the track's centre.
+  function current() {
+    const mid = track.getBoundingClientRect().left + track.clientWidth / 2;
+    let best = 0, bd = Infinity;
+    cards.forEach((c, i) => {
+      const r = c.getBoundingClientRect();
+      const d = Math.abs(r.left + r.width / 2 - mid);
+      if (d < bd) { bd = d; best = i; }
+    });
+    return best;
+  }
+
+  function go(i) {
+    i = Math.max(0, Math.min(cards.length - 1, i));
+    const c = cards[i];
+    const tr = track.getBoundingClientRect();
+    const cr = c.getBoundingClientRect();
+    const delta = (cr.left + cr.width / 2) - (tr.left + tr.width / 2);
+    track.scrollTo({ left: track.scrollLeft + delta, behavior: reduceMotion ? "auto" : "smooth" });
+  }
+
+  let raf = 0;
+  function update() {
+    const i = current();
+    dots.forEach((d, j) => d.classList.toggle("is-on", j === i));
+    if (prev) prev.disabled = i <= 0;
+    if (next) next.disabled = i >= cards.length - 1;
+  }
+
+  if (prev) prev.addEventListener("click", () => go(current() - 1));
+  if (next) next.addEventListener("click", () => go(current() + 1));
+  track.addEventListener("scroll", () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(update);
+  }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();

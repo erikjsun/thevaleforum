@@ -483,17 +483,61 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   font-size: clamp(1.5rem, 3.4vw, 2.3rem); letter-spacing: .04em; color: var(--ink);
 }
 .imagine-lede { margin-top: .7rem; max-width: 54ch; color: rgba(26, 18, 12, .62); }
-.imagine-list { list-style: none; margin: clamp(1.6rem, 4vh, 2.4rem) 0 0; display: grid; gap: clamp(1.1rem, 2.6vh, 1.6rem); }
-.imagine-list li {
-  position: relative; padding-left: 1.6rem; max-width: 62ch;
-  color: rgba(26, 18, 12, .78); line-height: 1.6;
+/* Imagine — carousel */
+.imagine-carousel { position: relative; margin-top: clamp(1.6rem, 4vh, 2.4rem); }
+.imagine-track {
+  list-style: none; margin: 0; padding: .4rem 0;
+  display: flex; gap: clamp(.9rem, 2.4vw, 1.5rem);
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
-.imagine-list li::before {
-  content: ""; position: absolute; left: 0; top: .62em;
-  width: 7px; height: 7px; border-radius: 50%; background: var(--orange);
+.imagine-track::-webkit-scrollbar { display: none; }
+.imagine-card {
+  scroll-snap-align: center; box-sizing: border-box;
+  flex: 0 0 clamp(16rem, 82%, 34rem);
+  display: flex; align-items: center;
+  min-height: clamp(9.5rem, 24vh, 13rem);
+  padding: clamp(1.3rem, 3.4vw, 2rem);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .72);
+  border: 1px solid rgba(167, 75, 75, .18);
+  box-shadow: 0 12px 30px rgba(60, 30, 12, .07);
+  color: rgba(26, 18, 12, .8); line-height: 1.6;
 }
-.imagine-list strong { color: var(--ink); font-weight: 500; }
-.imagine-list em { color: var(--brick); font-style: italic; }
+.imagine-card p { margin: 0; }
+.imagine-card strong { color: var(--ink); font-weight: 600; }
+.imagine-card em { color: var(--brick); font-style: italic; }
+
+.imagine-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+  width: 2.9rem; height: 2.9rem; border-radius: 50%;
+  border: 1px solid rgba(167, 75, 75, .3); background: rgba(255, 252, 246, .95);
+  color: var(--ink); font-size: 1.5rem; line-height: 1; cursor: pointer;
+  display: grid; place-items: center;
+  box-shadow: 0 8px 22px rgba(60, 30, 12, .12);
+  transition: background .25s, border-color .25s, color .25s, opacity .25s;
+}
+.imagine-prev { left: 0; }
+.imagine-next { right: 0; }
+.imagine-nav:hover:not(:disabled) { background: var(--orange); border-color: var(--orange); color: #2a1608; }
+.imagine-nav:disabled { opacity: .32; cursor: default; }
+
+.imagine-dots { display: flex; justify-content: center; gap: .5rem; margin-top: clamp(1.1rem, 2.6vh, 1.5rem); }
+.imagine-dot {
+  width: 8px; height: 8px; padding: 0; border-radius: 50%; cursor: pointer;
+  border: 1px solid rgba(167, 75, 75, .4); background: transparent;
+  transition: background .25s, border-color .25s, transform .25s;
+}
+.imagine-dot.is-on { background: var(--orange); border-color: var(--orange); transform: scale(1.25); }
+
+@media (min-width: 701px) {
+  /* gutters for the arrows to sit in, clear of the card text */
+  .imagine-carousel { padding-inline: 3.4rem; }
+}
+@media (max-width: 700px) {
+  .imagine-nav { display: none; }
+  .imagine-card { flex-basis: 86%; }
+}
 
 /* ---------- The five days, compactly ---------- */
 .daystrip {
