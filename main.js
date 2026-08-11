@@ -528,20 +528,30 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
     track.scrollTo({ left: track.scrollLeft + delta, behavior: reduceMotion ? "auto" : "smooth" });
   }
 
+  // Side padding so any card — including the first and last — can sit
+  // centred; without it, cards narrower than the track never reach centre.
+  function pad() {
+    const cw = cards[0].getBoundingClientRect().width;
+    const p = Math.max(0, (track.clientWidth - cw) / 2);
+    track.style.paddingLeft = p + "px";
+    track.style.paddingRight = p + "px";
+  }
+
   let raf = 0;
   function update() {
     const i = current();
     dots.forEach((d, j) => d.classList.toggle("is-on", j === i));
-    if (prev) prev.disabled = i <= 0;
-    if (next) next.disabled = i >= cards.length - 1;
   }
 
-  if (prev) prev.addEventListener("click", () => go(current() - 1));
-  if (next) next.addEventListener("click", () => go(current() + 1));
+  const n = cards.length;
+  // Wrap around, so the ends loop infinitely.
+  if (prev) prev.addEventListener("click", () => go((current() - 1 + n) % n));
+  if (next) next.addEventListener("click", () => go((current() + 1) % n));
   track.addEventListener("scroll", () => {
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(update);
   }, { passive: true });
-  window.addEventListener("resize", update);
+  window.addEventListener("resize", () => { pad(); update(); });
+  pad();
   update();
 })();
