@@ -638,6 +638,11 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 .arc-scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .arc-scroll::-webkit-scrollbar { display: none; }
 .arc-svg { display: block; width: 100%; min-width: 1400px; height: auto; overflow: visible; }
+/* On PC the right-hand rail nav is visible; inset the timeline so the
+   Forum thread-end clears it. Mobile/tablet (rail hidden) is untouched. */
+@media (min-width: 1101px) {
+  .arc-scroll { padding-right: clamp(2.5rem, 5vw, 6rem); }
+}
 
 /* threads */
 .thread { fill: none; stroke-width: 2.5; stroke-linecap: round; opacity: .75; transition: opacity .45s, stroke-width .45s; }
