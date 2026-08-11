@@ -533,8 +533,9 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 @media (min-width: 701px) {
   /* gutters for the arrows to sit in, clear of the card text */
   .imagine-carousel { padding-inline: 3.4rem; }
-  /* taller and narrower cards on PC */
-  .imagine-card { flex-basis: clamp(16rem, 44%, 22rem); min-height: clamp(14rem, 34vh, 18rem); }
+  /* narrow cards that hug their text, so there's little empty space */
+  .imagine-track { align-items: flex-start; }
+  .imagine-card { flex-basis: clamp(16rem, 44%, 22rem); min-height: clamp(9rem, 18vh, 11rem); }
 }
 @media (max-width: 700px) {
   .imagine-nav { display: none; }
