@@ -685,6 +685,7 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
 .carousel-dots { display: flex; gap: .5rem; }
 .carousel-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: .3s; }
 .carousel-dots i.is-on { background: var(--orange); box-shadow: 0 0 12px rgba(255, 160, 35, .7); }
+.carousel-credit { margin-top: clamp(1rem, 2.5vh, 1.4rem); text-align: center; font-size: .76rem; letter-spacing: .04em; color: var(--muted); opacity: .75; }
 
 /* Venue features */
 .features {
