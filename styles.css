@@ -1015,6 +1015,11 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   border-top: 1px solid var(--line); font-size: .84rem;
 }
 
+
+/* Am-I-eligible reads as a checklist people scan, so give it more size */
+#d-match .dlg-body p { font-size: 1.02rem; line-height: 1.7; }
+#d-match .dlg-body p + p { margin-top: 1.1em; }
+
 /* Structured sheet content */
 .sheet-sec + .sheet-sec { margin-top: clamp(1.8rem, 4vh, 2.6rem); }
 .sheet-sec h4 {

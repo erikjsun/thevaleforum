@@ -27,7 +27,7 @@
 ---------------------------------------------------------------------------- */
 
 const FORM_URL  = "https://docs.google.com/forms/d/1s31Bd04MQvLgops2mI22ROAvZ-ziHNJw41iDxOXBM_8/viewform";
-const OPENS_AT  = new Date("2026-08-15T00:00:00+02:00");
+const OPENS_AT  = new Date("2026-08-17T09:00:00+02:00");
 const CLOSES_AT = new Date("2026-08-30T23:59:59+02:00");
 
 const CONTACT = "info@thevale.eu";
@@ -435,7 +435,7 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
       if (count) count.classList.remove("is-hidden");
       target = OPENS_AT;
       if (copy) {
-        copy.innerHTML = "Applications open on <strong>15 August</strong> and close on " +
+        copy.innerHTML = "Applications open on <strong>Monday 17 August</strong> and close on " +
           "<strong>30 August 2026</strong>. Fifty places, and we read every application — " +
           "we are far more interested in what you are curious about than in your CV.";
       }
