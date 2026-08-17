@@ -6,19 +6,19 @@
    CONFIG — the three things you will actually want to change
    --------------------------------------------------------------------------
 
-   FORM_URL
-     The PUBLIC link to the Google Form. Right now this is built from the
-     form id in the edit URL, which works as soon as the form is published
-     and set to "Anyone with the link".
+   FORM_URL / FORM_SHORT
+     Two spellings of the same published form, because they do different jobs.
 
-     To get the canonical public link: open the form → Send → the link (🔗)
-     tab → copy. It looks like:
-       https://docs.google.com/forms/d/e/1FAIpQLSc..../viewform
-     Paste it below, replacing the value.
+     FORM_URL is the canonical link and is what the embed uses — the iframe
+     needs "?embedded=true" appended, and forms.gle drops query parameters
+     when it redirects, so the short link cannot carry it.
 
-     Until the form is published, Google returns 401 and the embed will not
-     render — the page falls back to an "open in a new tab" link on its own,
-     so nothing breaks in the meantime.
+     FORM_SHORT is the shareable one, used for the "open in a new tab" link
+     and for anything you paste into Slack or an email.
+
+     To re-derive either: open the form → Send → the link (🔗) tab. The box
+     gives the canonical link, and ticking "Shorten URL" gives the forms.gle
+     one.
 
    OPENS_AT / CLOSES_AT
      Application window. The whole Apply section (countdown, button, copy)
@@ -26,7 +26,9 @@
      have to redeploy on the 15th or the 30th.
 ---------------------------------------------------------------------------- */
 
-const FORM_URL  = "https://docs.google.com/forms/d/1s31Bd04MQvLgops2mI22ROAvZ-ziHNJw41iDxOXBM_8/viewform";
+const FORM_URL   = "https://docs.google.com/forms/d/e/1FAIpQLScMXuIlctrGVdsHcPNLDpRCClSSdnHjmQB_gsb0YgoPVQmKLw/viewform";
+const FORM_SHORT = "https://forms.gle/nGhcSqWJtoXxDkTbA";
+
 const OPENS_AT  = new Date("2026-08-17T09:00:00+02:00");
 const CLOSES_AT = new Date("2026-08-30T23:59:59+02:00");
 
@@ -428,7 +430,7 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   function render() {
     const st = state();
 
-    if (link) link.href = FORM_URL;
+    if (link) link.href = FORM_SHORT;
 
     if (st === "before") {
       if (label) label.textContent = "UNTIL APPLICATIONS OPEN";

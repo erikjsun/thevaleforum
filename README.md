@@ -22,17 +22,36 @@ Both live at the top of **`main.js`**, in the CONFIG block.
 ### 1. The Google Form link
 
 ```js
-const FORM_URL = "https://docs.google.com/forms/d/1s31Bd04.../viewform";
+const FORM_URL   = "https://docs.google.com/forms/d/e/1FAIpQLSc.../viewform";
+const FORM_SHORT = "https://forms.gle/nGhcSqWJtoXxDkTbA";
 ```
 
-This is built from the id in the form's *edit* URL and starts working the moment the form
-is **published** and set to **"Anyone with the link"**. To use the canonical public link
-instead: open the form → **Send** → the link (🔗) tab → copy → paste it here. It will look
-like `https://docs.google.com/forms/d/e/1FAIpQLSc.../viewform`.
+Two spellings of the same published form, because they do different jobs. **`FORM_URL`**
+is the canonical link and is what the embed uses — the iframe needs `?embedded=true`
+appended, and `forms.gle` silently drops query parameters when it redirects, so the short
+link cannot carry it. **`FORM_SHORT`** is the shareable one: the "open in a new tab" link,
+and whatever you paste into Slack or an email.
 
-Until the form is public, Google answers with a 401 and the embed will not render — the
-page already shows an "open in a new tab" link next to it, so nothing looks broken in the
-meantime.
+To re-derive either: open the form → **Send** → the link (🔗) tab. The box gives the
+canonical link; ticking **Shorten URL** gives the `forms.gle` one.
+
+**The form must be reachable without a Google sign-in.** If Google answers `401` — *"You
+must sign in to access this content"* — the embed renders a sign-in box rather than the
+form, and Google refuses to render its own sign-in flow inside a third-party iframe, so
+the embed becomes a dead end rather than a degraded experience. Two settings cause it:
+
+- Settings → Responses → **Restrict to users in *org* and its trusted organisations**
+- Settings → Responses → **Collect email addresses: Verified** (set it to *Responder
+  input* instead, which asks for the address without demanding an account)
+
+Check it from outside the org before applications open:
+
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" "$FORM_URL"   # want 200, not 401
+```
+
+If sign-in has to stay on for some reason, drop the embed and send people straight to
+`FORM_SHORT` in a new tab — see `loadForm()` in `main.js`.
 
 The form is **click-to-load**: the iframe is only injected once someone presses the button.
 That keeps Google's cookies off the page for everyone who never applies, which is the
