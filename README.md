@@ -133,6 +133,11 @@ you cannot source it, cut it rather than write around it.
 | `gut-schoeneworth.de` | Venue: the Apfelscheune's 120 m² and 4.3 m ceilings, the thatch, chef Matthias Pape, Gault&Millau 2005, Gründerstar 2023, Galloway beef, estate-pressed apple juice, WiFi, "sleep with the window open" |
 | The team | The "Can you imagine" list, which is explicitly framed as *possible*, not scheduled — the programme genuinely does not exist until participants write it |
 
+The brochure PDF and its download link were pulled from the Apply section in August 2026
+— the document was not up to speed with the page. It is still a valid source for the
+figures above; it is just no longer offered to applicants. To bring it back, revert the
+commit that removed it: both the file and the `.apply-more` link come back together.
+
 Voice is first-person from the organising team. The brochure speaks to partners and
 funders; this page speaks to VALE alumni.
 
