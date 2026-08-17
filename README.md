@@ -86,6 +86,18 @@ repository root. `vercel.json` sets clean URLs, security headers and cache lifet
 For `forum.thevale.eu`: add the domain in the Vercel project, then point a `CNAME` at
 `cname.vercel-dns.com`.
 
+**The production branch is `claude/vale-forum-recruitment-page-p1wbzy`, not `main`.**
+Pushing to `main` builds successfully and tells you nothing is wrong — the deployment just
+comes back with `target: null` and the live site never changes. Only that branch has
+`target: "production"`. Push to both, or move the production branch to `main` in Project
+Settings → Git and delete this paragraph.
+
+Do not trust a green build as proof the site updated. Check the thing itself:
+
+```sh
+curl -s -o /dev/null -w "%{http_code}\n" "https://forum.thevale.eu/photos/<a-file-you-just-added>.jpg"
+```
+
 ## Running it locally
 
 ```bash
