@@ -136,6 +136,31 @@ you cannot source it, cut it rather than write around it.
 Voice is first-person from the organising team. The brochure speaks to partners and
 funders; this page speaks to VALE alumni.
 
+### Photographs
+
+Files in `/photos` are named for the cohort they come from (`2021-course-1.jpg`), so a
+photo can always be traced back to its source. Two `notes-*.jpg` files survive from the
+first batch: `notes-03` on the Leadership Lab beat, and `notes-02` on the Saturday beat.
+
+**`notes-02` is a Symposium photograph and that is deliberate.** The Saturday beat is
+styled `beat-cool` because it is the one day the week faces outwards, and the photo has to
+read as a different kind of event — a stage, a screen, an audience — or the teal loses its
+meaning. The course photographs are warm, rustic and close; do not swap one in here.
+
+The tell, if you are sorting a new batch: Symposium means name badges, blue printed
+materials, a corporate atrium or the red-curtain venue. Course means green VALE
+sweatshirts, rustic rooms, flipcharts and no badges.
+
+Two things to check on any new batch before it goes in:
+
+- **EXIF orientation.** Three photos in the August 2026 batch carried rotation tags
+  (`Orientation` 3, 6 and 8). Browsers honour them, most command-line tools do not, and
+  two of the three turned out to be portrait once corrected. Apply the rotation into the
+  pixels and strip the tag, or the image rotates twice.
+- **Duplicates.** Hash the batch against itself *and* against `/photos`, `/venue`,
+  `/team`. `venue/01-estate.jpg` once ran twice — the panoramic break in `#why` and the
+  first carousel slide.
+
 **Two standing rules**, learned the hard way on the first draft:
 
 1. **No invented texture.** An early version had a lake, a 2am conversation and a
