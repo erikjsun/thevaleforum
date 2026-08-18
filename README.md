@@ -77,6 +77,21 @@ It also flips live if the boundary passes while somebody has the page open.
 
 ---
 
+## Replacing a photo
+
+**Change the filename when you change the picture.** Images are served with a
+`Cache-Control` max-age, so a new file at an old URL keeps showing the old picture to
+anyone who has already loaded the page — the browser has no reason to ask again.
+
+This bit us on George: the photo was replaced in `98dd6ed`, the filename stayed
+`/team/george.jpg`, and the team kept seeing the previous shot. The fix was renaming it to
+`/team/george-2.jpg`, which is a URL no cache has ever seen. A `?v=2` query string works
+too, but a rename is proof against CDNs that key on path alone.
+
+The image max-age is **one hour** (`vercel.json`). It was a week, which is sensible for a
+finished site and actively unhelpful while the page is being edited daily. Put it back up
+once the content settles.
+
 ## Deploying
 
 Vercel, as a static site — no framework preset, no build command, output directory is the
