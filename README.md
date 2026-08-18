@@ -60,16 +60,16 @@ polite thing to do on an Erasmus+ funded site.
 ### 2. The application window
 
 ```js
-const OPENS_AT  = new Date("2026-08-15T00:00:00+02:00");
+const OPENS_AT  = new Date("2026-08-17T09:00:00+02:00");
 const CLOSES_AT = new Date("2026-08-30T23:59:59+02:00");
 ```
 
 The whole Apply section rewrites itself off these two dates, so **you do not have to
-redeploy on the 15th or the 30th**:
+redeploy on the 17th or the 30th**:
 
 | When | Countdown | Button | Copy |
 |---|---|---|---|
-| Before `OPENS_AT` | counts down to opening | "Remind me when it opens" (mailto) | "Applications open on 15 August…" |
+| Before `OPENS_AT` | counts down to opening | "Remind me when it opens" (mailto) | "Applications open on 17 August…" |
 | Between the two | counts down to the deadline | "Open the application form" | "Applications are open now…" |
 | After `CLOSES_AT` | hidden | "Write to us anyway" (mailto) | "Applications closed on…" |
 
@@ -145,10 +145,24 @@ you cannot source it, cut it rather than write around it.
 | `gut-schoeneworth.de` | Venue: the Apfelscheune's 120 m² and 4.3 m ceilings, the thatch, chef Matthias Pape, Gault&Millau 2005, Gründerstar 2023, Galloway beef, estate-pressed apple juice, WiFi, "sleep with the window open" |
 | The team | The "Can you imagine" list, which is explicitly framed as *possible*, not scheduled — the programme genuinely does not exist until participants write it |
 
-The brochure PDF and its download link were pulled from the Apply section in August 2026
-— the document was not up to speed with the page. It is still a valid source for the
-figures above; it is just no longer offered to applicants. To bring it back, revert the
-commit that removed it: both the file and the `.apply-more` link come back together.
+The brochure was briefly pulled in August 2026 while it was out of step with the page,
+and restored once Marky sent a corrected version.
+
+It arrives from Canva at around 14 MB, which is far too heavy to hand to an applicant.
+Shrink it before committing, and do not rasterise — page 7 carries a live link to
+forum.thevale.eu and the text layer is worth keeping. What works, in order:
+
+1. Downsample each image to roughly 120 DPI **of the size it is actually placed at**, not
+   of its own pixel dimensions. `Document.rewrite_images()` recompresses but does not
+   resize, so do it by hand via `Page.replace_image()`.
+2. Convert to JPEG anything with no soft mask. Most of the "PNGs" are opaque RGB and drop
+   by 80% or more.
+3. For the two banner images that *do* carry a soft mask, rebuild the alpha into an RGBA
+   PNG and quantise to ~192 colours. This is the single biggest win: without it the file
+   stalls near 3.9 MB, with it it lands at 1.7 MB.
+
+That path took 14.5 MB to 1.7 MB with a per-page RMS difference under 3/255 — no visible
+change. Check the page count before you start: the upload harness has misreported it.
 
 Voice is first-person from the organising team. The brochure speaks to partners and
 funders; this page speaks to VALE alumni.
