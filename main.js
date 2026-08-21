@@ -369,6 +369,7 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const copy    = $("#apply-copy");
   const count   = $("#count");
   const label   = $("#count-label");
+  const status  = $("#apply-status");
   const cells   = { d: $("#c-d"), h: $("#c-h"), m: $("#c-m"), s: $("#c-s") };
 
   const embedUrl = FORM_URL + (FORM_URL.includes("?") ? "&" : "?") + "embedded=true";
@@ -427,12 +428,21 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
     if (diff === 0) { target = null; render(); }
   }
 
+  /* The pill above the countdown. `live` is the only state that gets the warm
+     treatment — the rest read as information, not as an invitation. */
+  function setStatus(text, live) {
+    if (!status) return;
+    status.textContent = text;
+    status.classList.toggle("is-live", live);
+  }
+
   function render() {
     const st = state();
 
     if (link) link.href = FORM_SHORT;
 
     if (st === "before") {
+      setStatus("APPLICATIONS OPEN MONDAY", false);
       if (label) label.textContent = "UNTIL APPLICATIONS OPEN";
       if (count) count.classList.remove("is-hidden");
       target = OPENS_AT;
@@ -445,7 +455,10 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
       if (alt) alt.classList.add("is-hidden");
 
     } else if (st === "open") {
-      if (label) label.textContent = "LEFT TO APPLY";
+      setStatus("APPLICATIONS ARE OPEN NOW", true);
+      // "UNTIL APPLICATIONS CLOSE", not "LEFT TO APPLY" — the latter reads as time
+      // remaining before you may apply, which is the opposite of what it means.
+      if (label) label.textContent = "UNTIL APPLICATIONS CLOSE";
       if (count) count.classList.remove("is-hidden");
       target = CLOSES_AT;
       if (copy) {
@@ -459,6 +472,7 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
       if (alt) alt.classList.remove("is-hidden");
 
     } else {
+      setStatus("APPLICATIONS HAVE CLOSED", false);
       if (label) label.textContent = "APPLICATIONS ARE CLOSED";
       if (count) count.classList.add("is-hidden");
       target = null;

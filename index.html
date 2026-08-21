@@ -125,6 +125,19 @@
           Hosted by <strong>The VALE</strong> – a non-profit running leadership courses
           for young people across Europe since 2018.
         </p>
+        <!-- Erasmus+ belongs on the cover, not only in the band above the footer.
+             It sits with the "hosted by" credit rather than after the buttons: the two
+             belong together, and below the CTA it fell under the fold on short phones.
+             The emblem keeps its own white plate — its blue is unreadable on the ember
+             ground, and it may not be recoloured to suit the page. -->
+        <a class="hero-funder" href="#funding" data-reveal>
+          <span class="hero-funder-plate">
+            <img src="/logos/eu-cofunded.png" alt="Co-funded by the European Union"
+                 width="1048" height="245" loading="eager" decoding="async" />
+          </span>
+          <span class="hero-funder-note">Erasmus+ is why this costs €40–120</span>
+        </a>
+
         <div class="hero-cta" data-reveal>
           <button class="btn btn-lg js-apply" type="button">Apply for a spot</button>
           <a class="btn-ghost" href="#place">See the venue</a>
@@ -651,6 +664,10 @@
       <p class="chapter-mark" data-reveal>06 — APPLY</p>
       <h2 class="seat-title" id="apply-h" data-reveal>COME<br />BACK</h2>
 
+      <!-- Without this, "COME BACK" over a ticking clock reads as "come back later",
+           and the countdown looks like it is counting down to opening. -->
+      <p class="seat-status" id="apply-status" data-reveal>APPLICATIONS OPEN MONDAY</p>
+
       <p class="count-label" id="count-label" data-reveal>UNTIL APPLICATIONS OPEN</p>
       <div class="count" id="count" data-reveal aria-live="polite">
         <div><b id="c-d">--</b><span>DAYS</span></div>
@@ -785,7 +802,7 @@
     </section>
 
     <!-- ============ FUNDING ============ -->
-    <section class="funding" aria-labelledby="funding-h">
+    <section class="funding" id="funding" aria-labelledby="funding-h">
       <div class="funding-inner">
         <div class="funding-marks">
           <figure class="funding-mark">

@@ -75,6 +75,13 @@ redeploy on the 17th or the 30th**:
 
 It also flips live if the boundary passes while somebody has the page open.
 
+The section leads with a **status pill** (`#apply-status`) above the countdown, and the
+countdown label reads *"until applications close"* rather than *"left to apply"*. Both came
+out of a reader saying the page looked like it meant *come back in nine days*: `COME BACK`
+set over a running clock reads as a countdown **to** opening, and the one line that said
+otherwise was the smallest type on the screen. Keep the pill, and keep any wording here
+explicit about opening versus closing.
+
 ---
 
 ## Replacing a photo
