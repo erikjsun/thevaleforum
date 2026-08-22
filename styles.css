@@ -304,7 +304,7 @@ main, .site-head, .site-foot, .rail, .ticker { position: relative; z-index: 1; }
   padding: .5rem .7rem; line-height: 0;
   transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out);
 }
-.hero-funder img { display: block; width: auto; height: clamp(28px, 3.4vh, 38px); }
+.hero-funder img { display: block; width: auto; height: clamp(48px, 6vh, 68px); }
 .hero-funder:hover, .hero-funder:focus-visible {
   transform: translateY(-2px);
   box-shadow: 0 10px 26px -12px rgba(0,0,0,.75);
