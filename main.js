@@ -32,7 +32,7 @@ const FORM_SHORT = "https://forms.gle/nGhcSqWJtoXxDkTbA";
 const OPENS_AT  = new Date("2026-08-17T09:00:00+02:00");
 const CLOSES_AT = new Date("2026-08-30T23:59:59+02:00");
 
-const CONTACT = "info@thevale.eu";
+const CONTACT = "erik@thevale.eu";
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $  = (s, r = document) => r.querySelector(s);
