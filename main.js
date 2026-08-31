@@ -472,17 +472,20 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
       if (alt) alt.classList.remove("is-hidden");
 
     } else {
-      setStatus("APPLICATIONS HAVE CLOSED", false);
-      if (label) label.textContent = "APPLICATIONS ARE CLOSED";
+      /* The formal window is over, but the form itself stays open — we would far rather
+         read a late application than turn someone away at the door. */
+      setStatus("LATE APPLICATIONS STILL WELCOME", true);
+      if (label) label.textContent = "THE FORM IS STILL OPEN";
       if (count) count.classList.add("is-hidden");
       target = null;
       if (copy) {
-        copy.innerHTML = "Applications closed on <strong>30 August 2026</strong>. If you have " +
-          "only just found this, write to us anyway — places occasionally open up, and we would " +
-          "rather hear from you late than not at all.";
+        copy.innerHTML = "The deadline was <strong>30 August 2026</strong>, but the form is " +
+          "still open. Places occasionally free up, and we would rather hear from you late " +
+          "than not at all — send it in and we will read it. If you would rather write first, " +
+          "we are at <a href=\"" + late + "\">" + CONTACT + "</a>.";
       }
-      setControl("link", "Write to us anyway", late);
-      if (alt) alt.classList.add("is-hidden");
+      setControl("button", "Open the application form").addEventListener("click", loadForm);
+      if (alt) alt.classList.remove("is-hidden");
     }
 
     tick();
