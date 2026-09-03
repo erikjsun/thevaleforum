@@ -61,17 +61,17 @@ polite thing to do on an Erasmus+ funded site.
 
 ```js
 const OPENS_AT  = new Date("2026-08-17T09:00:00+02:00");
-const CLOSES_AT = new Date("2026-08-30T23:59:59+02:00");
+const CLOSES_AT = new Date("2026-09-18T23:59:59+02:00");
 ```
 
 The whole Apply section rewrites itself off these two dates, so **you do not have to
-redeploy on the 17th or the 30th**:
+redeploy on the 17th or the 18th**:
 
 | When | Countdown | Button | Copy |
 |---|---|---|---|
 | Before `OPENS_AT` | counts down to opening | "Remind me when it opens" (mailto) | "Applications open on 17 August…" |
 | Between the two | counts down to the deadline | "Open the application form" | "Applications are open now…" |
-| After `CLOSES_AT` | hidden | "Write to us anyway" (mailto) | "Applications closed on…" |
+| After `CLOSES_AT` | hidden | "Open the application form" | "The deadline was… but the form is still open" |
 
 It also flips live if the boundary passes while somebody has the page open.
 

@@ -23,14 +23,14 @@
    OPENS_AT / CLOSES_AT
      Application window. The whole Apply section (countdown, button, copy)
      switches itself between three states off these two dates, so you do not
-     have to redeploy on the 15th or the 30th.
+     have to redeploy on the 17th or the 18th.
 ---------------------------------------------------------------------------- */
 
 const FORM_URL   = "https://docs.google.com/forms/d/e/1FAIpQLScMXuIlctrGVdsHcPNLDpRCClSSdnHjmQB_gsb0YgoPVQmKLw/viewform";
 const FORM_SHORT = "https://forms.gle/nGhcSqWJtoXxDkTbA";
 
 const OPENS_AT  = new Date("2026-08-17T09:00:00+02:00");
-const CLOSES_AT = new Date("2026-08-30T23:59:59+02:00");
+const CLOSES_AT = new Date("2026-09-18T23:59:59+02:00");
 
 const CONTACT = "erik@thevale.eu";
 
@@ -448,7 +448,7 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
       target = OPENS_AT;
       if (copy) {
         copy.innerHTML = "Applications open on <strong>Monday 17 August</strong> and close on " +
-          "<strong>30 August 2026</strong>. Fifty places, and we read every application — " +
+          "<strong>18 September 2026</strong>. Fifty places, and we read every application — " +
           "we are far more interested in what you are curious about than in your CV.";
       }
       setControl("link", "Remind me when it opens", remind);
@@ -462,8 +462,8 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
       if (count) count.classList.remove("is-hidden");
       target = CLOSES_AT;
       if (copy) {
-        copy.innerHTML = "Applications are <strong>open now</strong> and close on " +
-          "<strong>30 August 2026</strong>. Take your time with it — we read every one, " +
+        copy.innerHTML = "Applications are <strong>open now</strong>. The deadline has been " +
+          "extended to <strong>18 September 2026</strong>. Take your time with it — we read every one, " +
           "and we are far more interested in what you are curious about than in your CV.";
       }
       setControl("button", "Open the application form").addEventListener("click", loadForm);
@@ -479,7 +479,7 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
       if (count) count.classList.add("is-hidden");
       target = null;
       if (copy) {
-        copy.innerHTML = "The deadline was <strong>30 August 2026</strong>, but the form is " +
+        copy.innerHTML = "The deadline was <strong>18 September 2026</strong>, but the form is " +
           "still open. Places occasionally free up, and we would rather hear from you late " +
           "than not at all — send it in and we will read it. If you would rather write first, " +
           "we are at <a href=\"" + late + "\">" + CONTACT + "</a>.";
